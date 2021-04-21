@@ -1,0 +1,162 @@
+//
+// ФАЙЛ РЕСУРСОВ МОДУЛЯ: MAIN.CPP
+//
+// Copyright [C] 2018 Alex Kondratenko krolmail@list.ru
+//
+
+#include <windows.h>
+#include "resource.h"
+
+STRINGTABLE {
+	IDS_WNDCLASS,                       "PhonesDB"
+	IDS_ABOUTTITLE,                     "О программе"
+	IDS_ABOUT,                          "Phones DataBase v.1.0\n\tby _KROL"
+	// Dialogs captions
+	IDDS_ADDINGREC,                     "Добавление записи"
+	IDDS_EDITINGREC,                    "Изменение записи"
+	IDDS_SEARCHRECS,                    "Искать записи"
+	IDDS_FILTERRECS,                    "Фильтровать записи"
+
+	IDS_DELETE,                         "Удалить "
+	IDS_ITEM,                           "элемент"
+	IDS_ITEMS_,                         " элемента(ов)"
+	IDS_CONFIRM,                        "Вы уверены?"
+	IDS_ERROR,                          "Ошибка!"
+	IDDS_OPEN_,                         "Открыть..."
+	IDDS_SAVEAS_,                       "Сохранить как..."
+
+	IDS_TOTALRECS,                      "Общее количество записей\t\t - "
+	IDS_VISIBLERECS,                    "\nКоличество отображаемых записей\t - "
+	IDS_ONFIELD,                        " по полю: """
+	IDS_NO,                             "нет"
+	IDS_FILTER_,                        "Фильтр: "
+	IDS_SEARCH_,                        "Поиск: "
+
+	IDS_ERR0,                   "Неверно задан номер телефона!\n Формат: ######"
+	IDS_ERR1,                    "Длина строки не должна превышать 29 символов!"
+	IDS_ERR2,                    "Длина строки не должна превышать 14 символов!"
+	IDS_ERR3,                           "Неверно задан номер дома!"
+	IDS_ERR4,                           "Неверно задан номер квартиры!"
+	IDS_ERR5,                           "Неверно задана левая граница!"
+	IDS_ERR6,                           "Неверно задана правая граница!"
+	IDS_ERR7,                           "Левая граница больше правой!"
+	IDS_DATEFORMAT,                     "\n Формат: dd.mm.yyyy"
+
+	// Columns
+	IDS_COL_NUM,                        "Номер"
+	IDS_COL_FULLNAME,                   "Ф.И.О."
+	IDS_COL_STREET,                     "Улица"
+	IDS_COL_HOUSE,                      "Дом"
+	IDS_COL_APPART,                     "Квартира"
+	IDS_COL_DATE,                       "Дата"
+}
+
+IDM_MAINMENU MENU {
+	POPUP "&Файл" {
+		MENUITEM "&Новый",                              IDM_NEW
+		MENUITEM "&Открыть...\tCTRL-O",                 IDM_OPEN
+		MENUITEM "&Сохранить\tCTRL-S",                  IDM_SAVE
+		MENUITEM "Сохранить &Как...\tCTRL-SHIFT-S",     IDM_SAVEAS
+		MENUITEM SEPARATOR
+		MENUITEM "&Выйти\tCTRL-Q",                      IDM_QUIT
+	}
+	POPUP "&Список" {
+		MENUITEM "&Добавить запись\tINS",               IDM_ADDREC
+		MENUITEM "&Редактировать запись\tENTER",        IDM_EDITREC
+		MENUITEM "&Удалить запись(и)\tDEL",             IDM_DELETEREC
+		MENUITEM SEPARATOR
+		MENUITEM "&Обновить\tF5",                       IDM_REFRESH
+		MENUITEM "&Очистить",                           IDM_CLEAR
+	}
+	POPUP "&Вид" {
+		POPUP "&Искать..." {
+			MENUITEM "по &шаблону",                     IDM_FINDTEMPL
+			MENUITEM "в &диапазоне",                    IDM_FINDRANGE
+		}
+		MENUITEM "Найти &Далее\tF3",                    IDM_FINDNEXT
+		POPUP "&Фильтр..." {
+			MENUITEM "&отключить",                      IDM_FILTEROFF
+			POPUP "&базы данных..." {
+				MENUITEM "по &шаблону",                 IDM_NFILTERTEMPL
+				MENUITEM "в &диапазоне",                IDM_NFILTERRANGE
+			}
+			POPUP "отфильтрованного &списка..." {
+				MENUITEM "по &шаблону",                 IDM_FILTERTEMPL
+				MENUITEM "в &диапазоне",                IDM_FILTERRANGE
+			}
+		}
+		MENUITEM "&Информация о базе данных",           IDM_INFODB
+	}
+	POPUP "&Справка" {
+		MENUITEM "&О программе...\tF1",                 IDM_ABOUT
+	}
+}
+
+APP_ACCELERATORS ACCELERATORS {
+	"O",        IDM_OPEN,        VIRTKEY, CONTROL
+	"S",        IDM_SAVE,        VIRTKEY, CONTROL
+	"S",        IDM_SAVEAS,      VIRTKEY, CONTROL, SHIFT
+	"Q",        IDM_QUIT,        VIRTKEY, CONTROL
+	VK_INSERT,  IDM_ADDREC,      VIRTKEY
+	VK_RETURN,  IDM_EDITREC,     VIRTKEY
+	VK_DELETE,  IDM_DELETEREC,   VIRTKEY
+	VK_F5,      IDM_REFRESH,     VIRTKEY
+	VK_F3,      IDM_FINDNEXT,    VIRTKEY
+	VK_F1,      IDM_ABOUT,       VIRTKEY
+}
+
+// ES_AUTOHSCROLL ?
+
+IDD_EDITDLG DIALOG 1, 1, 158, 115
+STYLE DS_CENTER | DS_SETFONT | WS_VISIBLE | WS_CAPTION
+FONT 10, "Sans serif" {
+	LTEXT "",            IDD1_CAPTION,  4,  4,  148, 12
+	LTEXT "Номер",       IDC_STATIC,    4,  22, 29,  12
+	EDITTEXT             IDD1_NUM,      42, 21, 29,  11,
+	ES_NUMBER | ES_AUTOHSCROLL
+	LTEXT "Ф.И.О.",      IDC_STATIC,    4,  34, 37,  11
+	EDITTEXT             IDD1_FULLNAME, 42, 33, 110, 11, ES_AUTOHSCROLL
+	LTEXT "Улица",       IDC_STATIC,    4,  46, 24,  11
+	EDITTEXT             IDD1_STREET,   42, 45, 58,  11, ES_AUTOHSCROLL
+	LTEXT "Дом",         IDC_STATIC,    4,  58, 26,  11
+	EDITTEXT             IDD1_HOUSE,    42, 57, 40,  11,
+	ES_NUMBER | ES_AUTOHSCROLL
+	LTEXT "Квартира",    IDC_STATIC,    4,  70, 37,  12
+	EDITTEXT             IDD1_APART,    42, 69, 40,  11,
+	ES_NUMBER | ES_AUTOHSCROLL
+	LTEXT "Дата",        IDC_STATIC,    4,  82, 19,  11
+	CONTROL "",          IDD1_DATE, "SysDateTimePick32",
+	WS_CHILD | WS_TABSTOP,              42, 81, 50,  11
+	DEFPUSHBUTTON "OK",  IDD1_OK,       5,  96, 64,  14
+	PUSHBUTTON "НАЗАД",  IDD1_CANCEL,   90, 96, 64,  14
+}
+
+IDD_TEMPLDLG DIALOG 1, 1, 180, 78
+STYLE DS_SETFONT | DS_CENTER | WS_VISIBLE | WS_CAPTION
+FONT 10, "Sans serif" {
+	LTEXT "",           IDD2_CAPTION, 4,   4,  172, 12
+	LTEXT "по полю",    IDC_STATIC,   4,   18, 48,  12
+	COMBOBOX            IDD2_FIELD,   52,
+	16, 64,  84,
+	CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+	LTEXT "соотв-ющие шаблону:",
+	IDC_STATIC,                       4,   32, 48,  20
+	EDITTEXT            IDD2_TEMPL,   52,  37, 124, 11, ES_AUTOHSCROLL
+	DEFPUSHBUTTON "OK", IDD2_OK,      8,   58, 72,  14
+	PUSHBUTTON "НАЗАД", IDD2_CANCEL,  100, 58, 72,  14
+}
+
+IDD_RANGEDLG DIALOG 1, 1, 180, 78
+STYLE DS_SETFONT | DS_CENTER | WS_VISIBLE | WS_CAPTION
+FONT 10, "Sans serif" {
+	LTEXT "",           IDD3_CAPTION, 4,   4,  172, 12
+	LTEXT "по полю",    IDC_STATIC,   4,   18, 48,  12
+	COMBOBOX            IDD3_FIELD,   52,  16, 64,  84,
+	CBS_DROPDOWN | WS_VSCROLL
+	LTEXT "соотв-ющие диапазону:",
+	IDC_STATIC,                       4,   32, 48,  20
+	EDITTEXT            IDD3_LEFT,    52,  37, 60,  11, ES_AUTOHSCROLL
+	EDITTEXT            IDD3_RIGHT,   116, 37, 60,  11, ES_AUTOHSCROLL
+	DEFPUSHBUTTON "OK", IDD3_OK,      8,   58, 72,  14
+	PUSHBUTTON "НАЗАД", IDD3_CANCEL,  100, 58, 72,  14
+}
